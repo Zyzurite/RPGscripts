@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 773f3629cb139644586c01b675cb6992
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - combatEnemy: {instanceID: 0}
+  - movesUI: {instanceID: 0}
+  - itemsUI: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
