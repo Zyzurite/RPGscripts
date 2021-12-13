@@ -13,6 +13,8 @@ public class EnemyCombat : MonoBehaviour
     public float extraIncrease;
     public float extraDecrease;
     public int extraExperience;
+    public int extraDamage;
+    public bool boss;
     void Start()
     {
         enemyStats = gameObject.GetComponent<DataMemory>();
@@ -50,15 +52,16 @@ public class EnemyCombat : MonoBehaviour
             playerCombat.experience += experience;
             hasRun = true;
             playerCombat.combat = false;
+            ItemDrop();
             Destroy(gameObject);
         }
     }
     public void Attack()
     {
         print("");
-        float damage = Random.Range(10, 25);
-        damage = damage * enemyStats.attack / (playerStats.defence + 1);
-        playerStats.health -= damage;
+        float damage = Random.Range(10 + extraDamage, 25 + extraDamage);
+        damage = (damage * enemyStats.attack / (playerStats.defence + 1)) + 1;
+        playerStats.health -= (int) damage;
 
         print("The enemy attacked and dealt " + (int) damage + " damage!");
         print("You have " + (int) playerStats.health + " health remaining");
@@ -137,9 +140,9 @@ public class EnemyCombat : MonoBehaviour
     public void SpecialAttack()
     {
         print("");
-        float damage = Random.Range(25, 40);
-        damage = damage * enemyStats.attack / (playerStats.defence + 1);
-        playerStats.health -= damage;
+        float damage = Random.Range(25 + extraDamage, 40 + extraDamage);
+        damage = (damage * enemyStats.attack / (playerStats.defence + 1)) + 1;
+        playerStats.health -= (int) damage;
 
         print("The enemy did a special attack!");
         print("The enemy dealt " + (int)damage + " damage!");
@@ -160,5 +163,60 @@ public class EnemyCombat : MonoBehaviour
         if (move == 10 && !hasRun)
             SpecialAttack();
         StopAllCoroutines();
+    }
+
+    public void ItemDrop()
+    {
+        if (!boss)
+        {
+                switch (Random.Range(1,6))
+            {
+                case 1:
+                    print("The enemy dropped a potion");
+                    playerCombat.potions += 1;
+                    break;
+                case 2:
+                    print("The enemy dropped an XBuff");
+                    playerCombat.xBuff += 1;
+                    break;
+                case 3:
+                    print("The enemy dropped an XDebuff");
+                    playerCombat.xDebuff += 1;
+                    break;
+                case 4:
+                    print("The enemy dropped a Smokebomb");
+                    playerCombat.smokeBomb += 1;
+                    break;
+                case 5:
+                    print("No item drop");
+                    break;
+            }
+        }
+
+        if(boss)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                switch (Random.Range(1, 5))
+                {
+                    case 1:
+                        print("The enemy dropped a potion");
+                        playerCombat.potions += 1;
+                        break;
+                    case 2:
+                        print("The enemy dropped an XBuff");
+                        playerCombat.xBuff += 1;
+                        break;
+                    case 3:
+                        print("The enemy dropped an XDebuff");
+                        playerCombat.xDebuff += 1;
+                        break;
+                    case 4:
+                        print("The enemy dropped a Smokebomb");
+                        playerCombat.smokeBomb += 1;
+                        break;
+                }
+            }
+        }
     }
 }

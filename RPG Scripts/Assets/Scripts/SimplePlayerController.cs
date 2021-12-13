@@ -20,7 +20,6 @@ public class SimplePlayerController : MonoBehaviour
     public float charHeight = 1.2f;
     public bool isGrounded = false;
 
-    public bool canMove;
 
     // Audio
 
@@ -33,13 +32,10 @@ public class SimplePlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (canMove)
-        {
-            PlayerMover();
-            ApplyGravity();
-            ProcessRaycast();
-            ProcessJumping();
-        }
+        PlayerMover();
+        ApplyGravity();
+        ProcessRaycast();
+        ProcessJumping();
     }
 
     void PlayerMover()

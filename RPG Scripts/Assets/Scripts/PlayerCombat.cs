@@ -15,13 +15,12 @@ public class PlayerCombat : MonoBehaviour
     private DataMemory playerStats;
     public int experience;
     public int requiredXP = 20;
-    private int level = 1;
+    public int level = 1;
 
     // UI booleans and tools
     public GameObject movesUI;
     public GameObject itemsUI;
     public bool playerTurn;
-    public bool battleStart;
     public bool combat;
     private bool combatUI;
     private bool inventory;
@@ -31,6 +30,7 @@ public class PlayerCombat : MonoBehaviour
     public int xDebuff;
     public int xBuff;
     public int smokeBomb;
+
 
 
     // Start is called before the first frame update
@@ -47,21 +47,18 @@ public class PlayerCombat : MonoBehaviour
             gameObject.GetComponent<SimplePlayerController>().enabled = true;
 
         CheckXP();
+        registerUI();
 
         if (combatEnemy != null && enemy != null)
-        {
             enemyStats = enemy.GetComponent<DataMemory>();
-
-            registerUI();
-        }
     }
 
     public void Attack()
     {
         ClearConsole();
         float damage = Random.Range(30, 40);
-        damage = damage * playerStats.attack / (enemyStats.defence + 1);
-        enemyStats.health -= damage;
+        damage = (damage * playerStats.attack / (enemyStats.defence + 1)) + 1;
+        enemyStats.health -= (int) damage;
             
         print((int) damage + " damage dealt");
         print("Enemy has " + (int) enemyStats.health + " remaining health");
@@ -149,9 +146,9 @@ public class PlayerCombat : MonoBehaviour
             return;
         if (success)
         {
-            damage = damage * playerStats.attack / (enemyStats.defence + 1);
+            damage = (damage * playerStats.attack / (enemyStats.defence + 1)) + 1;
             print((int) damage + " damage dealt");
-            enemyStats.health -= damage;
+            enemyStats.health -= (int) damage;
         }
         else
             print("Attack missed!");
@@ -164,15 +161,15 @@ public class PlayerCombat : MonoBehaviour
     {
         ClearConsole();
         print("Your health is " + (int)playerStats.health);
-        print("Your attack is " + playerStats.attack);
-        print("Your defence is " + playerStats.defence);
+        print("Your attack is " + playerStats.attack.ToString("0.0"));
+        print("Your defence is " + playerStats.defence.ToString("0.0"));
         print("Enemy health is " + (int)enemyStats.health);
-        print("Enemy attack is " + enemyStats.attack);
-        print("Enemy defence is " + enemyStats.defence);
+        print("Enemy attack is " + enemyStats.attack.ToString("0.0"));
+        print("Enemy defence is " + enemyStats.defence.ToString("0.0"));
     }
 
 
-    public static void ClearConsole()
+    public void ClearConsole()
     {
         var assembly = Assembly.GetAssembly(typeof(SceneView));
         var type = assembly.GetType("UnityEditor.LogEntries");
@@ -259,15 +256,48 @@ public class PlayerCombat : MonoBehaviour
     }
     public void XBuff()
     {
-
+        ClearConsole();
+        if (xBuff >= 1)
+        {
+            playerStats.defence += 0.8f;
+            playerStats.attack += 0.8f;
+            print("Your stats have been dramatically raised!");
+            xBuff -= 1;
+            playerTurn = false;
+        }
+        else
+            print("Not enough XBuffs!");
     }
     public void XDebuff()
     {
-
+        ClearConsole();
+        if (xDebuff >= 1)
+        {
+            enemyStats.defence -= 0.5f;
+            enemyStats.attack -= 0.5f;
+            print("Enemy stats have been dramatically decreased!");
+            xDebuff -= 1;
+            playerTurn = false;
+        }
+        else
+            print("Not enough XDebuffs!");
     }
 
     public void Smokebomb()
     {
-
+        ClearConsole();
+        if (smokeBomb >= 1)
+        {
+            print("You flee from the battle!");
+            enemy.GetComponent<EnemyCombat>().player = null;
+            enemy = null;
+            combatEnemy = null;
+            combat = false;
+            playerTurn = false;
+            combatUI = true;
+            smokeBomb -= 1;
+        }
+        else
+            print("Not enough Smokebombs!");
     }
 }
