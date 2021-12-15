@@ -16,6 +16,7 @@ public class PlayerSave
     public float baseAttack;
     public float baseDefence;
     public float health;
+    public int scene;
 
     public PlayerSave(PlayerCombat player, DataMemory playerstats)
     {
@@ -30,5 +31,6 @@ public class PlayerSave
         baseAttack = playerstats.baseAttack;
         baseDefence = playerstats.baseDefence;
         health = playerstats.health;
+        scene = player.scene;
     }
 }

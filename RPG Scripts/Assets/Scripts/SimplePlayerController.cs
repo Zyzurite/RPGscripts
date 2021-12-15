@@ -26,8 +26,8 @@ public class SimplePlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
+        ProcessRaycast();
+        ProcessJumping();
     }
 
     private void FixedUpdate()
@@ -74,8 +74,6 @@ public class SimplePlayerController : MonoBehaviour
 
     void ProcessRaycast()
     {
-        RaycastHit hit;
-
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red, charHeight);
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), charHeight))

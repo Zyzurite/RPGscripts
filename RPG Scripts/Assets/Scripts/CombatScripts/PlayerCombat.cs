@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -18,12 +19,13 @@ public class PlayerCombat : MonoBehaviour
     public int level = 1;
 
     // UI booleans and tools
-    public GameObject movesUI;
-    public GameObject itemsUI;
+    private GameObject movesUI;
+    private GameObject itemsUI;
     public bool playerTurn;
-    public bool combat;
+    private bool combat;
     private bool combatUI;
     private bool inventory;
+    public int scene;
 
     // Inventory ints
     public int potions;
@@ -37,6 +39,9 @@ public class PlayerCombat : MonoBehaviour
     void Start()
     {
         playerStats = gameObject.GetComponent<DataMemory>();
+
+        movesUI = GameObject.FindGameObjectWithTag("Moves");
+        itemsUI = GameObject.FindGameObjectWithTag("Items");
     }
 
     private void FixedUpdate()
@@ -50,7 +55,14 @@ public class PlayerCombat : MonoBehaviour
         registerUI();
 
         if (combatEnemy != null && enemy != null)
+        {
             enemyStats = enemy.GetComponent<DataMemory>();
+            combat = true;
+        }
+        else
+            combat = false;
+
+        scene = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void Attack()

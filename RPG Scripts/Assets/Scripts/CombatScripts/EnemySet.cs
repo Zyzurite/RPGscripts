@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemySet : MonoBehaviour
 {
-    public GameObject enemy;
+    private GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemy = gameObject.transform.parent.gameObject;
     }
 
     // Update is called once per frame

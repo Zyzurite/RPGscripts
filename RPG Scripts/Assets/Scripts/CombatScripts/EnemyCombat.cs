@@ -28,7 +28,7 @@ public class EnemyCombat : MonoBehaviour
         {
             playerCombat = player.GetComponent<PlayerCombat>();
             playerStats = player.GetComponent<DataMemory>();
-            
+
 
             healthCheck();
 
@@ -36,8 +36,10 @@ public class EnemyCombat : MonoBehaviour
             {
                 StartCoroutine("RollMove");
             }
-        }    
+        }
+
         
+
     }
 
     public void healthCheck()
@@ -51,7 +53,6 @@ public class EnemyCombat : MonoBehaviour
             playerStats.health += 50;
             playerCombat.experience += experience;
             hasRun = true;
-            playerCombat.combat = false;
             ItemDrop();
             Destroy(gameObject);
         }
@@ -188,7 +189,7 @@ public class EnemyCombat : MonoBehaviour
                     playerCombat.smokeBomb += 1;
                     break;
                 case 5:
-                    print("No item drop");
+                    print("no item drop");
                     break;
             }
         }
