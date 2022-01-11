@@ -11,6 +11,8 @@ public class PlayerCombat : MonoBehaviour
     public GameObject combatEnemy;
     private GameObject enemy;
     private DataMemory enemyStats;
+    public GameObject mainCamera;
+    private EnemyCombat enemyCombat;
 
     // Player stats
     private DataMemory playerStats;
@@ -32,20 +34,31 @@ public class PlayerCombat : MonoBehaviour
     public int xDebuff;
     public int xBuff;
     public int smokeBomb;
+    private Vector3 cameraPos;
+    private Vector3 cameraRot;
+    public bool resetCamera;
 
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playerStats = gameObject.GetComponent<DataMemory>();
 
         movesUI = GameObject.FindGameObjectWithTag("Moves");
         itemsUI = GameObject.FindGameObjectWithTag("Items");
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        cameraPos = mainCamera.transform.localPosition;
+        cameraRot = mainCamera.transform.localEulerAngles;
     }
+
 
     private void FixedUpdate()
     {
+
+        
         if (combat)
             gameObject.GetComponent<SimplePlayerController>().enabled = false;
         else if (!combat)
@@ -54,15 +67,22 @@ public class PlayerCombat : MonoBehaviour
         CheckXP();
         registerUI();
 
-        if (combatEnemy != null && enemy != null)
+        if (combatEnemy != null && enemy != null && !resetCamera)
         {
             enemyStats = enemy.GetComponent<DataMemory>();
+            enemyCombat = enemy.GetComponent<EnemyCombat>();
             combat = true;
+            ProcessCamera();
         }
         else
+        {
             combat = false;
+        }
 
         scene = SceneManager.GetActiveScene().buildIndex;
+
+        if (resetCamera)
+            ReProcessCamera();
     }
 
     public void Attack()
@@ -308,8 +328,29 @@ public class PlayerCombat : MonoBehaviour
             playerTurn = false;
             combatUI = true;
             smokeBomb -= 1;
+            resetCamera = true;
         }
         else
             print("Not enough Smokebombs!");
+    }
+
+    public void ProcessCamera()
+    {
+        this.gameObject.transform.position = enemyStats.gameObject.transform.position + new Vector3(0 - enemyCombat.extraXDistance, 0.85f - enemyCombat.extraYDistance, -10 - enemyCombat.extraZDistance);
+        this.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+        cameraAdjust(2.2f   , 0.5f, -2.2f, 0, -20, 0);
+    }
+
+    private void ReProcessCamera()
+    {
+        mainCamera.transform.localPosition = cameraPos;
+        mainCamera.transform.localEulerAngles = cameraRot;
+        resetCamera = false;
+    }
+
+    public void cameraAdjust(float posX,float posY, float posZ, float rotX, float rotY, float rotZ)
+    {
+        mainCamera.transform.localPosition = new Vector3(posX, posY, posZ);
+        mainCamera.transform.localEulerAngles = new Vector3(rotX, rotY, rotZ);
     }
 }
