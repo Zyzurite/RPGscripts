@@ -15,6 +15,9 @@ public class EnemyCombat : MonoBehaviour
     public int extraExperience;
     public int extraDamage;
     public bool boss;
+    public float extraZDistance;
+    public float extraYDistance;
+    public float extraXDistance;
     void Start()
     {
         enemyStats = gameObject.GetComponent<DataMemory>();
@@ -34,7 +37,7 @@ public class EnemyCombat : MonoBehaviour
 
             if (!playerCombat.playerTurn)
             {
-                StartCoroutine("RollMove");
+                StartCoroutine(RollMove());
             }
         }
 
@@ -54,6 +57,7 @@ public class EnemyCombat : MonoBehaviour
             playerCombat.experience += experience;
             hasRun = true;
             ItemDrop();
+            playerCombat.resetCamera = true;
             Destroy(gameObject);
         }
     }

@@ -8,6 +8,13 @@ public class GameManage : MonoBehaviour
     private PlayerCombat player;
     private DataMemory playerstats;
     // Start is called before the first frame update
+
+    void FixedUpdate()
+    {
+        if (playerstats.health <= 0 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Death"))
+            SceneManager.LoadScene("Death");
+    }
+
     void Start()
     {
         player = gameObject.GetComponent<PlayerCombat>();

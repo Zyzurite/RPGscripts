@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Moves
   - Items
+  - Cameras
   layers:
   - Default
   - TransparentFX
