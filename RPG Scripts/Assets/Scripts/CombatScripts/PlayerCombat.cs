@@ -77,7 +77,10 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             combat = false;
+<<<<<<< HEAD
             StopAllCoroutines();
+=======
+>>>>>>> 784312fc3a6f079d56cb71fe4e3055618b8a33bf
         }
 
         scene = SceneManager.GetActiveScene().buildIndex;
@@ -339,8 +342,12 @@ public class PlayerCombat : MonoBehaviour
     {
         this.gameObject.transform.position = enemyStats.gameObject.transform.position + new Vector3(0 - enemyCombat.extraXDistance, 0.85f - enemyCombat.extraYDistance, -10 - enemyCombat.extraZDistance);
         this.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+<<<<<<< HEAD
 
         cameraAdjust(2.2f, 0.5f, -2.2f, 0, -20, 0);
+=======
+        cameraAdjust(2.2f   , 0.5f, -2.2f, 0, -20, 0);
+>>>>>>> 784312fc3a6f079d56cb71fe4e3055618b8a33bf
     }
 
     private void ReProcessCamera()
@@ -355,4 +362,8 @@ public class PlayerCombat : MonoBehaviour
         mainCamera.transform.localPosition = new Vector3(posX, posY, posZ);
         mainCamera.transform.localEulerAngles = new Vector3(rotX, rotY, rotZ);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 784312fc3a6f079d56cb71fe4e3055618b8a33bf

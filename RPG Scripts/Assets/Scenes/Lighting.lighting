@@ -10,7 +10,11 @@ LightingSettings:
   serializedVersion: 3
   m_GIWorkflowMode: 0
   m_EnableBakedLightmaps: 0
+<<<<<<< HEAD
   m_EnableRealtimeLightmaps: 1
+=======
+  m_EnableRealtimeLightmaps: 0
+>>>>>>> 784312fc3a6f079d56cb71fe4e3055618b8a33bf
   m_RealtimeEnvironmentLighting: 1
   m_BounceScale: 1
   m_AlbedoBoost: 1
